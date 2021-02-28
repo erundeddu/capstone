@@ -15,6 +15,9 @@ if __name__ == "__main__":
 	ts = now.strftime("%Y%m%d_%H%M%S")  # get timestamp as a string
 	out_path = out_folder + "/" + ts + ".csv"  # path of file to which processed information is saved
 	
+	if not os.path.isdir(out_folder):
+		os.mkdir(out_folder)
+	
 	f = open(out_path, "w")
 	f.write("img_name,mean_intensity,std_intensity\n")  # initialize file header
 	f.close()
