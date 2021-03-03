@@ -6,8 +6,8 @@ import os
 
 if __name__ == "__main__":
 	## parameters to change
-	path_img = "masks/white.bmp"  # path to image from which mask is extracted (best to use a bright image to filter out the dark borders)
-	thresh = 80  # binary threshold to filter out dark borders (0-255)
+	path_img = "masks/mask_with_cylinder.bmp"  # path to image from which mask is extracted (best to use a bright image to filter out the dark borders)
+	thresh = 200 # binary threshold to filter out dark borders (0-255)
 	kernel_size = 11  # size of filter to perform erosion and dilation operation (kernel_size x kernel_size square)
 	
 	mask_folder = "masks"  # folder that contains the masks to filter out the borders of the camera in the images
