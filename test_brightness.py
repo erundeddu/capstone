@@ -13,7 +13,7 @@ if __name__ == "__main__":
 	
 	now = datetime.now()  # get current date and time
 	ts = now.strftime("%Y%m%d_%H%M%S")  # get timestamp as a string
-	out_path = out_folder + "/" + ts + ".csv"  # path of file to which processed information is saved
+	out_path = out_folder + "/" + "brightness_" + ts + ".csv"  # path of file to which processed information is saved
 	
 	if not os.path.isdir(out_folder):
 		os.mkdir(out_folder)
