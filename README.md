@@ -2,7 +2,7 @@
 * Code to compute light intensity statistics from images captured with Basler Dart camera
 * Code to test FTIR contact detection from images captured with Basler Dart camera on an assembled Visiflex
 
-# Light intensity testing how-to
+# Opacity testing how-to
 * Capture the desired images using pylon Viewer while connected to Basler dart camera via USB (suggested OS: Linux)
 * Copy all images to the folder /images in this package (sample images are included in this repo)
 * Select one image to be used as mask in order to filter out camera borders, and copy it to the folder /masks; change the path\_img variable in get_mask.py to match the name of this image
@@ -16,7 +16,7 @@ python3 test_brightness.py
 ```
 * Statistics for all images are written under the /output folder
 
-# FTIR testing how-to
+# Contact detection testing how-to
 * Capture the desired images of the Visiflex cap under a concentrated external contact using pylon Viewer while connected to Basler dart camera via USB (suggested OS: Linux)
 * Copy all images to the folder /ftir_images in this package (sample images are included in this repo)
 * Image cropping:
