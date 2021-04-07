@@ -20,7 +20,8 @@ def cluster_colors(mat):
 	distance = ((c1_hs[0]-c2_hs[0])**2 + (c1_hs[1]-c2_hs[1])**2)**0.5  # only H and S channels used to compute distance to find a measure for color difference
 	# distance = ((center[0,0]-center[1,0])**2 + (center[0,1]-center[1,1])**2 + (center[0,2]-center[1,2])**2)**0.5
 	distance /= (255*2)  # normalize distance
-	return compactness,center,distance
+	bright_diff = abs(int(c1_hsv[0,0,2])-int(c2_hsv[0,0,2]))/255
+	return compactness,center,distance,bright_diff
 	
 
 
@@ -37,14 +38,14 @@ if __name__ == "__main__":
 		os.mkdir(out_folder)
 		
 	f = open(out_path, "w")
-	f.write("img_name,HS_distance,compactness\n")  # initialize file header
+	f.write("img_name,HS_distance,brightness_difference,compactness\n")  # initialize file header
 	f.close()
 	
 	for i in os.listdir(cropped_folder):
 		img = cv2.imread(cropped_folder + "/" + i)  # read each image
 		img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)  # convert to hsv space for processing
-		comp, cent, dst = cluster_colors(img)
+		comp, cent, dst, bright_diff = cluster_colors(img)
 		f = open(out_path, "a")  # open file to write results
-		f.write(i + "," + "{:.8f}".format(dst) + "," + "{:.8f}".format(comp) + "\n")  # write results
+		f.write(i + "," + "{:.8f}".format(dst) + "," + "{:.8f}".format(bright_diff) + "," + "{:.8f}".format(comp) + "\n")  # write results
 		f.close()  # close file
 
