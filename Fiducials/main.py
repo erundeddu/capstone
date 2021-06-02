@@ -7,7 +7,7 @@ high_red_1 = np.array([180,255,255])
 low_red_2 = np.array([0,220,50])
 high_red_2 = np.array([10,255,255])
 
-img = cv2.imread("fiducials.jpg")  # read camera image
+img = cv2.imread("fiducials.bmp")  # read camera image
 # img = cv2.flip(img, -1)
 img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)  # convert image to HSV
 
@@ -18,7 +18,7 @@ mask = cv2.bitwise_or(mask_1, mask_2)  # mask to filter red (overlap two masks)
 color = cv2.bitwise_and(img, img, mask=mask)  # filter original image
 color = cv2.resize(color, (400, 300))  # resize (reduce) image to display on monitor
 img = cv2.resize(img, (400, 300))  # resize original image
-cv2.imwrite("filtered.jpg", color)  # save image showing only filtered red spots
+cv2.imwrite("filtered.bmp", color)  # save image showing only filtered red spots
 
 im = cv2.cvtColor(color, cv2.COLOR_BGR2GRAY)  # convert image with filtered red spots to grayscale
 
@@ -70,20 +70,30 @@ while len(idx_used) < len(keypoints):  # loop until every single keypoint has be
 # check if the sequence is clockwise or counterclockwise
 pt1 = ordered_keypoints[0]  # first point
 pt2 = ordered_keypoints[1]  # second point
+pt3 = ordered_keypoints[-1]  # last point
+
 is_ccw = False   # if True: sequence is counterclockwise
 # compare, depending on the quadrant around the center of fiducials ring in which the first point is found, its x or y coordinate to that of the second point to determine CW or CCW
 if pt1[0] > x_center and pt1[1] > y_center:  # IV quadrant
-    if pt1[1] > pt2[1]:
+    if pt1[0] < pt2[0]:
         is_ccw = True
+    elif pt1[0] > pt3[0]:
+    	is_ccw = True    
 elif pt1[0] > x_center and pt1[1] < y_center:  # I quadrant
     if pt1[0] > pt2[0]:
         is_ccw = True
+    elif pt1[0] < pt3[0]:
+    	is_ccw = True  
 elif pt1[0] < x_center and pt1[1] < y_center:  # II quadrant
-    if pt1[1] < pt2[1]:
+    if pt1[0] > pt2[0]:
         is_ccw = True
+    elif pt1[0] < pt3[0]:
+    	is_ccw = True
 else:  # III quadrant
     if pt1[0] < pt2[0]:
         is_ccw = True
+    elif pt1[0] > pt3[0]:
+    	is_ccw = True 
 
 if not is_ccw:
     ordered_keypoints.reverse()  # now ordered_keypoints must be ccw
@@ -109,4 +119,4 @@ for ii in range(len(ordered_keypoints)):  # label all fiducials with a number to
 
 img = cv2.circle(img, (int(x_center), int(y_center)), 2, (0,0,255), -1)  # draw the center of the fiducials ring
 
-cv2.imwrite('processed.jpg', img)  # save processed image
+cv2.imwrite('processed.bmp', img)  # save processed image
