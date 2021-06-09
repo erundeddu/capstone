@@ -24,7 +24,7 @@ im = cv2.cvtColor(color, cv2.COLOR_BGR2GRAY)  # convert image with filtered red 
 
 # Set up the blob detector with parameters.
 params = cv2.SimpleBlobDetector_Params()
-params.minThreshold = 1
+params.minThreshold = 5
 params.maxThreshold = 255
 params.filterByArea = True
 params.minArea = 10
